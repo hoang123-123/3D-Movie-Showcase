@@ -9,3 +9,5 @@ export interface Movie {
   duration: string;
   releaseYear: number;
 }
+
+export type SortOption = 'rating' | 'releaseYear' | 'title';

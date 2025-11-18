@@ -1,14 +1,17 @@
 
 import React from 'react';
+import { SortOption } from '../types';
 
 interface HeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   showFavorites: boolean;
   onShowFavoritesToggle: () => void;
+  sortBy: SortOption;
+  onSortChange: (option: SortOption) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange, showFavorites, onShowFavoritesToggle }) => {
+const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange, showFavorites, onShowFavoritesToggle, sortBy, onSortChange }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg shadow-lg">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,12 +29,27 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange, showFavori
                 placeholder="Search movies..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-40 sm:w-64 md:w-80 bg-slate-800 text-white placeholder-slate-400 border border-slate-700 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300"
+                className="w-32 sm:w-48 md:w-64 bg-slate-800 text-white placeholder-slate-400 border border-slate-700 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300"
               />
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
+              </div>
+            </div>
+             <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => onSortChange(e.target.value as SortOption)}
+                className="appearance-none w-full bg-slate-800 text-white border border-slate-700 rounded-full py-2 pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300 cursor-pointer text-sm sm:text-base"
+                aria-label="Sort movies by"
+              >
+                <option value="rating">Rating (High-Low)</option>
+                <option value="releaseYear">Newest First</option>
+                <option value="title">Title (A-Z)</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </div>
             </div>
             <button
